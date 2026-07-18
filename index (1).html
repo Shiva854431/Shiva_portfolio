@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shiva Nakkanagoni — Software Engineer</title>
+<meta name="description" content="Portfolio of Nakkanagoni Shiva — Computer Science student building live, working systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e14;
+    --bg-alt:#0d131b;
+    --surface:#131b26;
+    --surface-2:#182231;
+    --border:#232f40;
+    --text:#e9eef4;
+    --text-dim:#8d9db1;
+    --text-faint:#5b6b7f;
+    --live:#34e58c;
+    --live-dim:#1c8a58;
+    --warm:#ff7a59;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --maxw:1120px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  ::selection{background:var(--live); color:#04140c;}
+
+  /* background grid texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity:0.18;
+    mask-image: radial-gradient(ellipse 70% 50% at 50% 0%, black 10%, transparent 70%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px; position:relative; z-index:1;}
+
+  /* ---------- status bar ---------- */
+  .statusbar{
+    border-bottom:1px solid var(--border);
+    background:rgba(10,14,20,0.85);
+    backdrop-filter:blur(8px);
+    position:sticky; top:0; z-index:50;
+  }
+  .statusbar-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 28px;
+    max-width:var(--maxw); margin:0 auto;
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--text-dim);
+  }
+  .status-left{display:flex; align-items:center; gap:18px;}
+  .dot-pulse{
+    display:inline-block; width:7px; height:7px; border-radius:50%;
+    background:var(--live);
+    box-shadow:0 0 0 0 rgba(52,229,140,0.6);
+    animation:pulse 2s infinite;
+    margin-right:7px;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(52,229,140,0.5);}
+    70%{box-shadow:0 0 0 7px rgba(52,229,140,0);}
+    100%{box-shadow:0 0 0 0 rgba(52,229,140,0);}
+  }
+  .status-item{display:flex; align-items:center;}
+  .status-nav{display:flex; gap:22px;}
+  .status-nav a{color:var(--text-dim); transition:color .15s;}
+  .status-nav a:hover{color:var(--live);}
+  @media (max-width:720px){
+    .status-nav{display:none;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:110px 0 90px;
+    position:relative;
+  }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--live);
+    letter-spacing:0.06em;
+    margin-bottom:22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:26px; height:1px;
+    background:var(--live);
+  }
+  h1.name{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(42px, 8vw, 84px);
+    line-height:0.98;
+    letter-spacing:-0.02em;
+    max-width:920px;
+  }
+  .hero-role{
+    font-family:var(--font-mono);
+    font-size:clamp(14px, 2vw, 18px);
+    color:var(--text-dim);
+    margin-top:22px;
+    max-width:640px;
+  }
+  .hero-role .tag{color:var(--warm);}
+  .hero-desc{
+    margin-top:22px;
+    max-width:560px;
+    color:var(--text-dim);
+    font-size:16px;
+  }
+  .hero-ctas{
+    display:flex; flex-wrap:wrap; gap:14px;
+    margin-top:38px;
+  }
+  .btn{
+    font-family:var(--font-mono);
+    font-size:13.5px;
+    padding:13px 22px;
+    border-radius:6px;
+    border:1px solid var(--border);
+    display:inline-flex; align-items:center; gap:8px;
+    transition:all .18s ease;
+  }
+  .btn-primary{
+    background:var(--live);
+    color:#04140c;
+    border-color:var(--live);
+    font-weight:600;
+  }
+  .btn-primary:hover{background:#4ff2a0; transform:translateY(-1px);}
+  .btn-ghost{
+    color:var(--text);
+    background:var(--surface);
+  }
+  .btn-ghost:hover{border-color:var(--live); color:var(--live); transform:translateY(-1px);}
+
+  /* hero stat strip */
+  .stat-strip{
+    margin-top:64px;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--surface);
+  }
+  .stat{
+    padding:22px 20px;
+    border-right:1px solid var(--border);
+  }
+  .stat:last-child{border-right:none;}
+  .stat-num{
+    font-family:var(--font-display);
+    font-size:clamp(22px,3vw,30px);
+    font-weight:700;
+    color:var(--live);
+  }
+  .stat-label{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:var(--text-faint);
+    margin-top:6px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  @media (max-width:640px){
+    .stat-strip{grid-template-columns:repeat(2,1fr);}
+    .stat{border-bottom:1px solid var(--border);}
+  }
+
+  /* ---------- section shell ---------- */
+  section{padding:96px 0;}
+  .section-head{
+    display:flex; align-items:baseline; gap:16px;
+    margin-bottom:44px;
+    border-bottom:1px solid var(--border);
+    padding-bottom:22px;
+  }
+  .section-idx{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--text-faint);
+  }
+  .section-title{
+    font-family:var(--font-display);
+    font-size:clamp(26px,3.4vw,36px);
+    font-weight:600;
+  }
+  .section-sub{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--text-faint);
+    margin-left:auto;
+    white-space:nowrap;
+  }
+  @media (max-width:600px){
+    .section-sub{display:none;}
+  }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:56px;
+  }
+  .about-text p{color:var(--text-dim); font-size:16px; margin-bottom:16px; max-width:60ch;}
+  .about-text strong{color:var(--text); font-weight:600;}
+  .edu-card{
+    border:1px solid var(--border);
+    background:var(--surface);
+    border-radius:10px;
+    padding:24px;
+  }
+  .edu-card + .edu-card{margin-top:16px;}
+  .edu-top{display:flex; justify-content:space-between; gap:12px; align-items:flex-start;}
+  .edu-school{font-weight:600; font-size:15px;}
+  .edu-degree{color:var(--text-dim); font-size:13.5px; margin-top:4px;}
+  .edu-meta{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--text-faint);
+    text-align:right;
+    white-space:nowrap;
+  }
+  .edu-score{
+    font-family:var(--font-mono);
+    color:var(--live);
+    font-size:12.5px;
+    margin-top:10px;
+  }
+  @media (max-width:820px){
+    .about-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- skills ---------- */
+  .skills-body{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .skills-titlebar{
+    display:flex; align-items:center; gap:8px;
+    padding:12px 18px;
+    border-bottom:1px solid var(--border);
+    background:var(--surface-2);
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--text-faint);
+  }
+  .tl-dot{width:9px; height:9px; border-radius:50%; background:var(--border);}
+  .skills-content{padding:26px 28px;}
+  .skill-row{
+    display:flex; gap:16px;
+    font-family:var(--font-mono);
+    font-size:14px;
+    padding:9px 0;
+    border-bottom:1px dashed var(--border);
+    flex-wrap:wrap;
+    align-items:baseline;
+  }
+  .skill-row:last-child{border-bottom:none;}
+  .skill-key{color:var(--live); min-width:150px; flex-shrink:0;}
+  .skill-key::before{content:"$ "; color:var(--text-faint);}
+  .skill-vals{color:var(--text-dim);}
+  .skill-vals span{color:var(--text);}
+
+  /* ---------- experience (log feed) ---------- */
+  .log{
+    border-left:2px solid var(--border);
+    margin-left:6px;
+  }
+  .log-entry{
+    position:relative;
+    padding:0 0 40px 32px;
+  }
+  .log-entry:last-child{padding-bottom:0;}
+  .log-entry::before{
+    content:"";
+    position:absolute; left:-7px; top:2px;
+    width:12px; height:12px;
+    border-radius:50%;
+    background:var(--bg);
+    border:2px solid var(--live);
+  }
+  .log-tag{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--live);
+    background:rgba(52,229,140,0.1);
+    border:1px solid var(--live-dim);
+    padding:2px 8px;
+    border-radius:4px;
+    display:inline-block;
+    margin-bottom:10px;
+  }
+  .log-title{font-family:var(--font-display); font-weight:600; font-size:18px; margin-bottom:8px;}
+  .log-desc{color:var(--text-dim); font-size:15px; max-width:66ch;}
+
+  /* ---------- projects ---------- */
+  .project-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+  }
+  @media (max-width:900px){.project-grid{grid-template-columns:1fr;}}
+  .project-card{
+    border:1px solid var(--border);
+    background:var(--surface);
+    border-radius:10px;
+    padding:26px;
+    display:flex; flex-direction:column;
+    transition:border-color .18s, transform .18s;
+  }
+  .project-card:hover{border-color:var(--live); transform:translateY(-3px);}
+  .proj-top{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;}
+  .proj-status{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    color:var(--live);
+    display:flex; align-items:center; gap:6px;
+    border:1px solid var(--live-dim);
+    padding:3px 8px;
+    border-radius:20px;
+  }
+  .proj-status.idle{color:var(--text-faint); border-color:var(--border);}
+  .proj-dot{width:6px; height:6px; border-radius:50%; background:var(--live);}
+  .proj-status.idle .proj-dot{background:var(--text-faint);}
+  .proj-name{font-family:var(--font-display); font-weight:600; font-size:19px; margin-bottom:10px;}
+  .proj-desc{color:var(--text-dim); font-size:14.5px; flex-grow:1; margin-bottom:18px;}
+  .proj-link{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--text);
+    display:inline-flex; align-items:center; gap:6px;
+    padding-top:14px;
+    border-top:1px solid var(--border);
+  }
+  .proj-link:hover{color:var(--live);}
+  .proj-link svg{width:12px; height:12px;}
+
+  /* ---------- achievements ---------- */
+  .ach-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1px;
+    background:var(--border);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  @media (max-width:720px){.ach-grid{grid-template-columns:1fr;}}
+  .ach-item{
+    background:var(--surface);
+    padding:24px 26px;
+    display:flex; gap:18px; align-items:flex-start;
+  }
+  .ach-metric{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--warm);
+    min-width:100px;
+    flex-shrink:0;
+  }
+  .ach-text{color:var(--text-dim); font-size:14.5px;}
+  .ach-text strong{color:var(--text);}
+
+  /* ---------- contact ---------- */
+  .contact-panel{
+    border:1px solid var(--border);
+    background:var(--surface);
+    border-radius:12px;
+    padding:52px;
+    text-align:center;
+  }
+  .contact-panel h2{
+    font-family:var(--font-display);
+    font-size:clamp(28px,4vw,42px);
+    margin-bottom:16px;
+  }
+  .contact-panel p{color:var(--text-dim); max-width:52ch; margin:0 auto 34px;}
+  .contact-cmd{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--text-faint);
+    margin-bottom:30px;
+  }
+  .contact-cmd span{color:var(--live);}
+  .contact-links{
+    display:flex; justify-content:center; gap:14px; flex-wrap:wrap;
+  }
+
+  footer{
+    padding:40px 0 60px;
+    text-align:center;
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--text-faint);
+  }
+
+  /* fade-in on scroll */
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="statusbar-inner">
+    <div class="status-left">
+      <span class="status-item"><span class="dot-pulse"></span>SYSTEM ONLINE</span>
+      <span class="status-item">Hyderabad, IN</span>
+    </div>
+    <nav class="status-nav">
+      <a href="#about">about</a>
+      <a href="#skills">skills</a>
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#achievements">achievements</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow">PORTFOLIO / v1.0</div>
+    <h1 class="name">Nakkanagoni Shiva</h1>
+    <div class="hero-role">Computer Science student &mdash; <span class="tag">full-stack</span> / <span class="tag">DSA</span> / <span class="tag">applied AI</span></div>
+    <p class="hero-desc">I build things that stay running: live dashboards, ride comparisons, exam generators. Currently at IIIT Basar, chasing systems that hold up under real traffic, not just demo day.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#projects">View projects →</a>
+      <a class="btn btn-ghost" href="https://github.com/Shiva854431" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+
+    <div class="stat-strip reveal">
+      <div class="stat"><div class="stat-num">9.5</div><div class="stat-label">PUC CGPA</div></div>
+      <div class="stat"><div class="stat-num">2027</div><div class="stat-label">B.Tech, expected</div></div>
+      <div class="stat"><div class="stat-num">Top 1%</div><div class="stat-label">POLYCET / SSC CHSL</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">shipped projects</div></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-head">
+      <span class="section-idx">01</span>
+      <h2 class="section-title">About &amp; Education</h2>
+      <span class="section-sub">background.log</span>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm a Computer Science undergrad at <strong>Rajiv Gandhi University of Knowledge Technologies, Basar (IIIT Basar)</strong>, expected to graduate in 2027. My focus is on writing efficient software and building products that people can actually use &mdash; from live scoreboards to AI-assisted exam tools.</p>
+        <p>Outside of coursework, I've worked across design, finance, and hardware-adjacent projects: designing a national logo contest entry, handling loan processing at a finance company, and building a sound-based deterrent system with a local farmer association. I like problems that don't stay in the textbook.</p>
+      </div>
+      <div class="reveal">
+        <div class="edu-card">
+          <div class="edu-top">
+            <div>
+              <div class="edu-school">IIIT Basar</div>
+              <div class="edu-degree">Bachelor of Technology, Computer Science</div>
+            </div>
+            <div class="edu-meta">Expected<br>2027</div>
+          </div>
+        </div>
+        <div class="edu-card">
+          <div class="edu-top">
+            <div>
+              <div class="edu-school">IIIT Basar</div>
+              <div class="edu-degree">Pre-University Course</div>
+            </div>
+            <div class="edu-meta">2021&ndash;2023</div>
+          </div>
+          <div class="edu-score">CGPA: 9.5 / 10</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-head">
+      <span class="section-idx">02</span>
+      <h2 class="section-title">Skills</h2>
+      <span class="section-sub">stack --list</span>
+    </div>
+    <div class="skills-body reveal">
+      <div class="skills-titlebar">
+        <span class="tl-dot"></span><span class="tl-dot"></span><span class="tl-dot"></span>
+        &nbsp;shiva@stack: ~
+      </div>
+      <div class="skills-content">
+        <div class="skill-row"><span class="skill-key">languages</span><span class="skill-vals"><span>Java</span>, <span>C</span>, <span>Python</span>, <span>JavaScript</span>, <span>TypeScript</span></span></div>
+        <div class="skill-row"><span class="skill-key">web</span><span class="skill-vals"><span>MERN stack</span>, <span>HTML</span>, <span>CSS</span></span></div>
+        <div class="skill-row"><span class="skill-key">foundations</span><span class="skill-vals"><span>Data Structures &amp; Algorithms</span>, <span>OOP</span>, <span>DBMS</span></span></div>
+        <div class="skill-row"><span class="skill-key">ai-tools</span><span class="skill-vals"><span>Claude</span>, <span>Perplexity AI</span></span></div>
+        <div class="skill-row"><span class="skill-key">tooling</span><span class="skill-vals"><span>GitHub</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-head">
+      <span class="section-idx">03</span>
+      <h2 class="section-title">Experience</h2>
+      <span class="section-sub">tail -f activity.log</span>
+    </div>
+    <div class="log">
+      <div class="log-entry reveal">
+        <span class="log-tag">INTERNSHIP</span>
+        <div class="log-title">Python Full Stack Developer &mdash; RVNS Solutions Pvt. Ltd.</div>
+        <div class="log-desc">Completed a full stack development internship building and shipping features across the Python-based stack.</div>
+      </div>
+      <div class="log-entry reveal">
+        <span class="log-tag">FIELD PROJECT</span>
+        <div class="log-title">Monkey Intrusion Prevention System</div>
+        <div class="log-desc">Built a non-lethal, sound-based deterrent system to scare away monkeys, developed with the Telangana Farmer Association to reduce crop loss.</div>
+      </div>
+      <div class="log-entry reveal">
+        <span class="log-tag">WORK</span>
+        <div class="log-title">Customer Relations &amp; Loan Processing &mdash; KLM Axiva Finvest</div>
+        <div class="log-desc">Handled customer relations and loan processing, and promoted gold loan services with competitive interest rates.</div>
+      </div>
+      <div class="log-entry reveal">
+        <span class="log-tag">DESIGN</span>
+        <div class="log-title">"VB-G RAM G" Logo Design &mdash; MyGov Contest</div>
+        <div class="log-desc">Designed a visual identity for a national-level government scheme logo contest.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-head">
+      <span class="section-idx">04</span>
+      <h2 class="section-title">Projects</h2>
+      <span class="section-sub">./run --all</span>
+    </div>
+    <div class="project-grid">
+      <div class="project-card reveal">
+        <div class="proj-top">
+          <div class="proj-status"><span class="proj-dot"></span>LIVE</div>
+        </div>
+        <div class="proj-name">Strider-Live</div>
+        <div class="proj-desc">A real-time sports score tracking platform where audiences view live game updates, backed by an admin panel to push score changes instantly.</div>
+        <a class="proj-link" href="https://github.com/Shiva854431" target="_blank" rel="noopener">View on GitHub ↗</a>
+      </div>
+      <div class="project-card reveal">
+        <div class="proj-top">
+          <div class="proj-status"><span class="proj-dot"></span>LIVE</div>
+        </div>
+        <div class="proj-name">AI Assessment System</div>
+        <div class="proj-desc">An AI-powered platform that generates subject-based MCQs and exam questions, helping educators create assessments quickly.</div>
+        <a class="proj-link" href="https://ai-assessment-creator-5.onrender.com/" target="_blank" rel="noopener">Open live app ↗</a>
+      </div>
+      <div class="project-card reveal">
+        <div class="proj-top">
+          <div class="proj-status idle"><span class="proj-dot"></span>IN DEV</div>
+        </div>
+        <div class="proj-name">SanchariRide</div>
+        <div class="proj-desc">A smart ride comparison app that finds the lowest fare and fastest option across Uber, Ola, and Rapido, with pickup/drop location analysis.</div>
+        <a class="proj-link" href="https://github.com/Shiva854431" target="_blank" rel="noopener">View on GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements">
+    <div class="section-head">
+      <span class="section-idx">05</span>
+      <h2 class="section-title">Achievements &amp; Activities</h2>
+      <span class="section-sub">records --sorted</span>
+    </div>
+    <div class="ach-grid reveal">
+      <div class="ach-item">
+        <div class="ach-metric">2026</div>
+        <div class="ach-text"><strong>Infosys Springboard Internship Program</strong> — selected for hands-on exposure in the software sector.</div>
+      </div>
+      <div class="ach-item">
+        <div class="ach-metric">Rank 104</div>
+        <div class="ach-text">Top percentile in <strong>SSC CHSL Tier 1 (2025)</strong>, quantitative aptitude &amp; logical reasoning.</div>
+      </div>
+      <div class="ach-item">
+        <div class="ach-metric">Rank 1200</div>
+        <div class="ach-text">State Rank in <strong>POLYCET (2021)</strong>, top percentile statewide.</div>
+      </div>
+      <div class="ach-item">
+        <div class="ach-metric">₹10,000</div>
+        <div class="ach-text">Cash prize via the <strong>Turito App</strong> for consistent performance on the V6 News educational program (2019).</div>
+      </div>
+      <div class="ach-item">
+        <div class="ach-metric">Mandal-level</div>
+        <div class="ach-text">Selected for the <strong>Chekumuki Science Talent Test</strong> (2019).</div>
+      </div>
+      <div class="ach-item">
+        <div class="ach-metric">2023&ndash;25</div>
+        <div class="ach-text">Webcast volunteer for <strong>Telangana General Elections</strong> &amp; <strong>Lok Sabha Elections</strong>; participated in <strong>E-Summit 2K25, IIT Bombay</strong>.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-panel reveal">
+      <h2>Let's build something that stays up.</h2>
+      <p>Open to internships, full-time roles, and interesting collaborations. Reach out any time.</p>
+      <div class="contact-cmd">$ contact <span>--email shivanakkanagoni17@gmail.com --phone +91-7093648295</span></div>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:shivanakkanagoni17@gmail.com">Email me →</a>
+        <a class="btn btn-ghost" href="tel:+917093648295">Call</a>
+        <a class="btn btn-ghost" href="https://github.com/Shiva854431" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/posts/shiva-nakkanagoni-727426411_newbeginning-offerletter-careerjourney-activity-7464270408104439809-w7oO?utm_source=share&utm_medium=member_android&rcm=ACoAAGjkTo8Ba650LF-60vxC_fmIbS4tKzLCXNc" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Nakkanagoni Shiva &middot; Hyderabad, India &middot; built with intent, not templates.
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.12});
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
