@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DevOps Event Registration</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            width: 400px;
+            margin: auto;
+            margin-top: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px gray;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        input, select, textarea {
+            width: 95%;
+            padding: 10px;
+            margin: 8px 0;
+        }
+        button {
+            background: green;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: darkgreen;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>DevOps Lab Event Registration</h2>
+
+    <form onsubmit="return validateForm()">
+
+        <input type="text" id="name" placeholder="Full Name" required>
+
+        <input type="email" id="email" placeholder="Email" required>
+
+        <input type="text" id="phone" placeholder="Phone Number" required>
+
+        <input type="text" id="college" placeholder="College Name" required>
+
+        <input type="text" id="dept" placeholder="Department" required>
+
+        <select id="year" required>
+            <option value="">Select Year</option>
+            <option>1st Year</option>
+            <option>2nd Year</option>
+            <option>3rd Year</option>
+            <option>4th Year</option>
+        </select>
+
+        <select id="event">
+            <option>Docker Workshop</option>
+            <option>Kubernetes Hands-on</option>
+            <option>CI/CD Pipeline</option>
+        </select>
+
+        <textarea id="msgbox" placeholder="Why do you want to join?" rows="3"></textarea>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <p id="output"></p>
+</div>
+
+<script>
+function validateForm() {
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+
+    // phone validation
+    if (phone.length != 10 || isNaN(phone)) {
+        document.getElementById("output").innerHTML = "❌ Enter valid 10-digit phone number";
+        return false;
+    }
+
+    document.getElementById("output").innerHTML =
+        "✅ Registration Successful, " + name + "! 🎉";
+
+    return false;
+}
+</script>
+
+</body>
+</html>
